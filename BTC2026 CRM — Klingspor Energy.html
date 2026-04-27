@@ -1,0 +1,3231 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)file:///C:/Users/conra/Downloads/btc2026_crm_5.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>BTC2026 CRM — Klingspor Energy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./BTC2026 CRM — Klingspor Energy_files/css2" rel="stylesheet">
+<script src="./BTC2026 CRM — Klingspor Energy_files/xlsx.full.min.js.download"></script>
+<script src="./BTC2026 CRM — Klingspor Energy_files/jspdf.umd.min.js.download"></script>
+<script src="./BTC2026 CRM — Klingspor Energy_files/jspdf.plugin.autotable.min.js.download"></script>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-elev: #141414;
+    --bg-card: #181818;
+    --bg-input: #0f0f0f;
+    --border: #262626;
+    --border-strong: #3a3a3a;
+    --text: #ededed;
+    --text-dim: #8a8a8a;
+    --text-faint: #555;
+    --accent: #f7931a;
+    --accent-dim: #b8691a;
+    --hot: #ff4747;
+    --warm: #f7931a;
+    --cold: #4a9eff;
+    --done: #3ec487;
+    --hl: rgba(247,147,26,0.08);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    overscroll-behavior-y: none;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { min-height: 100vh; padding-bottom: 100px; }
+
+  /* HEADER */
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px 10px;
+  }
+  .header-top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .logo .accent { color: var(--accent); }
+  .header-actions { display: flex; gap: 6px; align-items: center; }
+  .sync-btn {
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .sync-btn.syncing { color: var(--accent); border-color: var(--accent); }
+  .sync-btn.synced .dot { background: var(--done); }
+  .sync-btn.error { color: var(--hot); border-color: var(--hot); }
+  .sync-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); }
+  .sync-btn.syncing .dot { background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+  .info-btn {
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    color: var(--text-dim);
+    width: 28px; height: 28px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: serif;
+    font-style: italic;
+    font-weight: 600;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .stat {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 6px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+    font-feature-settings: 'tnum';
+  }
+  .stat-label {
+    font-size: 8px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .stat.accent .stat-num { color: var(--accent); }
+  .stat.hot .stat-num { color: var(--hot); }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px 0;
+    background: var(--bg);
+    position: sticky;
+    top: 130px;
+    z-index: 40;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab {
+    flex: 1;
+    padding: 10px 8px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+  }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-count {
+    display: inline-block;
+    background: var(--bg-elev);
+    color: var(--text);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    margin-left: 4px;
+  }
+  .tab.active .tab-count { background: var(--accent); color: #000; }
+
+  /* SORT/FILTERS */
+  .sort-bar {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px 4px;
+    align-items: center;
+  }
+  .sort-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+  .sort-select {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 5px;
+  }
+  .filters {
+    display: flex;
+    gap: 6px;
+    padding: 8px 16px 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter-chip {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+
+  /* BOOTH LIST */
+  .booth-list { padding: 0 16px; }
+  .booth-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s;
+  }
+  .booth-card.expanded { border-color: var(--accent-dim); }
+  .booth-card.status-done { opacity: 0.7; }
+  .booth-card.status-skip { opacity: 0.4; }
+
+  .booth-header {
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* SIMPLIFIED: walking number is always neutral */
+  .walking-num {
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--text-faint);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-faint);
+    flex-shrink: 0;
+  }
+
+  /* SIMPLIFIED: importance is always neutral pill */
+  .booth-priority {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-feature-settings: 'tnum';
+    background: var(--bg-elev);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  /* Only top-tier importance gets a subtle accent */
+  .booth-priority.high {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
+  .booth-info { flex: 1; min-width: 0; }
+  .booth-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .booth-meta {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 2px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .booth-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text);
+    font-weight: 500;
+  }
+  /* SIMPLIFIED: category is always plain dim text */
+  .booth-cat {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 9px;
+    color: var(--text-dim);
+  }
+  .photo-badge { color: var(--text-dim); }
+  .editor-tag {
+    font-size: 8px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--bg-input);
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* STATUS DOTS — kept, this is the only meaningful color system */
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1.5px solid var(--border-strong);
+  }
+  .status-dot.todo { background: transparent; }
+  .status-dot.visited { background: var(--cold); border-color: var(--cold); }
+  .status-dot.hot { background: var(--hot); border-color: var(--hot); box-shadow: 0 0 8px rgba(255,71,71,0.6); }
+  .status-dot.warm { background: var(--warm); border-color: var(--warm); }
+  .status-dot.done { background: var(--done); border-color: var(--done); }
+
+  .chevron {
+    color: var(--text-faint);
+    font-size: 14px;
+    transition: transform 0.2s;
+  }
+  .booth-card.expanded .chevron { transform: rotate(90deg); color: var(--accent); }
+
+  /* EXPANDED BODY */
+  .booth-body {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid var(--border);
+  }
+  .booth-card.expanded .booth-body { display: block; }
+
+  .rationale {
+    background: var(--hl);
+    border-left: 2px solid var(--accent);
+    padding: 8px 10px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .field { margin: 12px 0; }
+  .field-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .field-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .field-action {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .field-action:hover { color: var(--accent); border-color: var(--accent); }
+  .field-action.syncing { color: var(--accent); border-color: var(--accent); }
+
+  .status-picker {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+  .status-btn {
+    padding: 8px 4px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-dim);
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .status-btn.active.todo { background: var(--bg-elev); color: var(--text); border-color: var(--border-strong); }
+  .status-btn.active.visited { background: rgba(74,158,255,0.15); color: var(--cold); border-color: var(--cold); }
+  .status-btn.active.hot { background: rgba(255,71,71,0.15); color: var(--hot); border-color: var(--hot); }
+  .status-btn.active.warm { background: rgba(247,147,26,0.15); color: var(--warm); border-color: var(--warm); }
+  .status-btn.active.done { background: rgba(62,196,135,0.15); color: var(--done); border-color: var(--done); }
+
+  textarea, input[type="text"], input[type="email"], input[type="date"] {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 10px;
+    resize: vertical;
+  }
+  textarea:focus, input:focus { outline: none; border-color: var(--accent); }
+  textarea { min-height: 60px; }
+
+  /* CONTACTS */
+  .contact-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    margin-bottom: 10px;
+    align-items: start;
+    padding: 8px;
+    background: var(--bg-input);
+    border-radius: 6px;
+  }
+  .contact-fields { display: flex; flex-direction: column; gap: 4px; }
+  .contact-fields input { padding: 7px 9px; font-size: 12px; background: var(--bg); }
+  .icon-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    width: 32px; height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .icon-btn:hover { color: var(--hot); border-color: var(--hot); }
+
+  .add-btn {
+    background: transparent;
+    border: 1px dashed var(--border-strong);
+    color: var(--text-dim);
+    padding: 8px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 4px;
+  }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PHOTOS */
+  .photos-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .photo-thumb {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .photo-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .photo-thumb.unsynced::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 1px #000;
+  }
+  .photo-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    background: rgba(0,0,0,0.85);
+    color: var(--hot);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-add-btn {
+    width: 70px;
+    height: 70px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+  .photo-add-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .photo-add-btn .label {
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .photo-input { display: none; }
+
+  .photo-status {
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .photo-status .unsynced { color: var(--accent); }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  /* TODOS */
+  .todo-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 6px;
+    padding: 6px;
+    background: var(--bg-input);
+    border-radius: 6px;
+  }
+  .todo-check {
+    width: 18px; height: 18px;
+    cursor: pointer;
+    accent-color: var(--accent);
+  }
+  .todo-row input[type="text"] {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    font-size: 12px;
+  }
+  .todo-row input.done { text-decoration: line-through; color: var(--text-faint); }
+  .todo-row input[type="date"] {
+    background: transparent;
+    border: none;
+    padding: 4px;
+    font-size: 11px;
+    color: var(--text-dim);
+    width: 110px;
+  }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tag {
+    padding: 5px 10px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-dim);
+    font-size: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.12s;
+  }
+  .tag.active {
+    background: rgba(247,147,26,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* EMAIL */
+  .email-draft {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 12px;
+    color: var(--text);
+    white-space: pre-wrap;
+    line-height: 1.6;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .email-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .btn {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+  }
+  .btn-secondary {
+    background: var(--bg-elev);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+  }
+  .btn:active { transform: scale(0.97); }
+
+  /* TODOS TAB */
+  .todo-list-view { padding: 0 16px; }
+  .todo-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+  .todo-item.done { opacity: 0.5; }
+  .todo-item.done .todo-text { text-decoration: line-through; }
+  .todo-text { font-size: 13px; }
+  .todo-source {
+    font-size: 10px;
+    color: var(--accent);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .todo-due { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+  .todo-due.overdue { color: var(--hot); font-weight: 600; }
+  .todo-due.today { color: var(--accent); font-weight: 600; }
+
+  /* FAB */
+  .fab-row {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    z-index: 60;
+  }
+  .fab {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 14px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 0 1px rgba(247,147,26,0.3);
+  }
+  .fab.secondary {
+    background: var(--bg-elev);
+    color: var(--text);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 0 1px var(--border-strong);
+  }
+
+  /* MODALS */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px 14px 0 0;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 20px 16px;
+    animation: slideUp 0.2s ease-out;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    margin: 0 0 16px;
+    color: var(--accent);
+  }
+  .modal-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .export-output {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 11px;
+    line-height: 1.5;
+    max-height: 50vh;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    color: var(--text);
+  }
+  .empty {
+    text-align: center;
+    padding: 40px 16px;
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  .empty-icon { font-size: 32px; opacity: 0.3; margin-bottom: 8px; }
+
+  /* LEGEND */
+  .legend-section {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .legend-section:last-child { border-bottom: none; padding-bottom: 0; }
+  .legend-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .legend-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .legend-row .demo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .legend-row .desc { font-size: 11px; color: var(--text-dim); }
+  .legend-row .desc strong { color: var(--text); }
+
+  .sync-info {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 12px;
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .sync-info code {
+    background: var(--bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--accent);
+    font-size: 10px;
+  }
+  .sync-info strong { color: var(--text); }
+
+  .editor-name-input {
+    width: 100%;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo">btc2026.<span class="accent">crm</span></div>
+    <div class="header-actions">
+      <button class="info-btn" onclick="openLegend()" title="Legend">i</button>
+      <button class="sync-btn synced" id="syncBtn" onclick="manualSync()" style="transition: background 0.2s;">
+        <span class="dot"></span><span id="syncLabel">Saved</span>
+      </button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="statTotal">18</div><div class="stat-label">Total</div></div>
+    <div class="stat accent"><div class="stat-num" id="statVisited">1</div><div class="stat-label">Visited</div></div>
+    <div class="stat hot"><div class="stat-num" id="statHot">0</div><div class="stat-label">Hot</div></div>
+    <div class="stat"><div class="stat-num" id="statTodos">0</div><div class="stat-label">Todos</div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" data-tab="booths">Booths <span class="tab-count" id="tabBoothsCount">18</span></button>
+  <button class="tab" data-tab="todos">Todos <span class="tab-count" id="tabTodosCount">0</span></button>
+  <button class="tab" data-tab="follow">Follow-up <span class="tab-count" id="tabFollowCount">0</span></button>
+</div>
+
+<!-- BOOTHS -->
+<div id="tab-booths" class="tab-content" style="display: block;">
+  <div class="sort-bar">
+    <span class="sort-label">Sort</span>
+    <select class="sort-select" id="sortSelect">
+      <option value="walking">Walking order (booth #)</option>
+      <option value="status">Status (hot first)</option>
+      <option value="importance">Importance (high first)</option>
+      <option value="alpha">Alphabetical</option>
+    </select>
+  </div>
+  <div class="filters" id="boothFilters">
+    <button class="filter-chip active" data-filter="all">All</button>
+    <button class="filter-chip" data-filter="todo">To visit</button>
+    <button class="filter-chip" data-filter="hot">Hot</button>
+    <button class="filter-chip" data-filter="warm">Warm</button>
+    <button class="filter-chip" data-filter="visited">Visited</button>
+    <button class="filter-chip" data-filter="exchange">Exchanges</button>
+    <button class="filter-chip" data-filter="law">Law</button>
+    <button class="filter-chip" data-filter="investor">Investors</button>
+    <button class="filter-chip" data-filter="energy">Energy</button>
+  </div>
+  <div class="booth-list" id="boothList">
+    <div class="booth-card expanded status-visited" data-id="b1">
+      <div class="booth-header" data-toggle="b1">
+        <div class="walking-num">1</div>
+        <div class="booth-priority high">8</div>
+        <div class="booth-info">
+          <div class="booth-name">Stand with Crypto / Coinbase</div>
+          <div class="booth-meta">
+            <span class="booth-num">#445</span>
+            <span class="booth-cat">Exchange</span>
+            <span>· 1 contact</span>
+            
+            
+            <span class="editor-tag">by anonymous</span>
+          </div>
+        </div>
+        <div class="status-dot visited"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    <div class="booth-body">
+      <div class="rationale">Industry standard; strong institutional presence and liquidity. High-volume venue for the gamified trading app. Also probe Coinbase Ventures for investor angle.</div>
+
+      <div class="field">
+        <div class="field-label">Status</div>
+        <div class="status-picker" data-statusfor="b1" style="margin-top:6px">
+          <button class="status-btn " data-status="todo">todo</button><button class="status-btn active visited" data-status="visited">visited</button><button class="status-btn " data-status="warm">warm</button><button class="status-btn " data-status="hot">hot</button><button class="status-btn " data-status="done">done</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-header">
+          <span class="field-label">Photos · cards / badges (max 5)</span>
+          
+        </div>
+        <div class="photos-row">
+          
+          
+            <label class="photo-add-btn" for="photo-b1">
+              <span>📷</span>
+              <span class="label">Add</span>
+            </label>
+            <input type="file" class="photo-input" id="photo-b1" accept="image/*" capture="environment" multiple="" data-boothphoto="b1">
+          
+        </div>
+        
+      </div>
+
+      <div class="field">
+        <div class="field-label">Contacts met</div>
+        <div data-contactsfor="b1" style="margin-top:6px">
+          
+            <div class="contact-row">
+              <div class="contact-fields">
+                <input type="text" placeholder="Name" value="" data-cidx="0" data-cfield="name">
+                <input type="text" placeholder="Role / title" value="" data-cidx="0" data-cfield="role">
+                <input type="email" placeholder="Email" value="" data-cidx="0" data-cfield="email">
+              </div>
+              <button class="icon-btn" data-removec="0">×</button>
+            </div>
+          
+        </div>
+        <button class="add-btn" data-addcontact="b1">+ Add contact</button>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Pitch outcome / notes</div>
+        <textarea data-notes="b1" placeholder="What was discussed, key reactions, who they suggested I talk to next..." style="margin-top:6px"></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Tags (drives email draft)</div>
+        <div class="tags" data-tagsfor="b1" style="margin-top:6px">
+          <div class="tag " data-tag="Volume share interest">Volume share interest</div><div class="tag active" data-tag="Wants demo">Wants demo</div><div class="tag " data-tag="Likes gamification angle">Likes gamification angle</div><div class="tag " data-tag="Concerned about US regs">Concerned about US regs</div><div class="tag active" data-tag="Decision maker met">Decision maker met</div><div class="tag " data-tag="Need to escalate">Need to escalate</div><div class="tag active" data-tag="Asked for term sheet">Asked for term sheet</div><div class="tag " data-tag="Competitor partnership">Competitor partnership</div><div class="tag " data-tag="Lukewarm">Lukewarm</div><div class="tag " data-tag="Hard pass">Hard pass</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Action items</div>
+        <div data-todosfor="b1" style="margin-top:6px">
+          
+        </div>
+        <button class="add-btn" data-addtodo="b1">+ Add todo</button>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Follow-up email — auto-drafted</div>
+        <div class="email-draft" id="emailDraft-b1" style="margin-top:6px">Hey Stand with Crypto / Coinbase team,
+
+Great chatting at the Bitcoin Conference — thanks for the time.
+
+Quick recap on what we're building: a gamified Bitcoin trading app, and we're looking for an exchange partner that can handle the volume our users will generate. Happy to set up a demo this week — what works for your team?
+
+Let me know what works — I'm back in Houston this week and flexible on timing.
+
+Talk soon,
+Conrad</div>
+        <div class="email-actions">
+          <button class="btn btn-secondary" data-regenerate="b1">↻ Regenerate</button>
+          <button class="btn" data-copyemail="b1">Copy email</button>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b17">
+      <div class="booth-header" data-toggle="b17">
+        <div class="walking-num">2</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">ExxonMobil</div>
+          <div class="booth-meta">
+            <span class="booth-num">#672</span>
+            <span class="booth-cat">Energy</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b18">
+      <div class="booth-header" data-toggle="b18">
+        <div class="walking-num">3</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">Shell</div>
+          <div class="booth-meta">
+            <span class="booth-num">#917</span>
+            <span class="booth-cat">Energy</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b2">
+      <div class="booth-header" data-toggle="b2">
+        <div class="walking-num">4</div>
+        <div class="booth-priority ">3</div>
+        <div class="booth-info">
+          <div class="booth-name">Robinhood</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1037</span>
+            <span class="booth-cat">Brokerage</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b3">
+      <div class="booth-header" data-toggle="b3">
+        <div class="walking-num">5</div>
+        <div class="booth-priority ">1</div>
+        <div class="booth-info">
+          <div class="booth-name">Freedom Law School</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1038</span>
+            <span class="booth-cat">Law</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b4">
+      <div class="booth-header" data-toggle="b4">
+        <div class="walking-num">6</div>
+        <div class="booth-priority ">6</div>
+        <div class="booth-info">
+          <div class="booth-name">Strike</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1150</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b5">
+      <div class="booth-header" data-toggle="b5">
+        <div class="walking-num">7</div>
+        <div class="booth-priority ">5</div>
+        <div class="booth-info">
+          <div class="booth-name">JH Marlin Law</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1168</span>
+            <span class="booth-cat">Law</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b6">
+      <div class="booth-header" data-toggle="b6">
+        <div class="walking-num">8</div>
+        <div class="booth-priority high">9</div>
+        <div class="booth-info">
+          <div class="booth-name">Kraken</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1250</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b7">
+      <div class="booth-header" data-toggle="b7">
+        <div class="walking-num">9</div>
+        <div class="booth-priority high">8</div>
+        <div class="booth-info">
+          <div class="booth-name">Gemini</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1318</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b8">
+      <div class="booth-header" data-toggle="b8">
+        <div class="walking-num">10</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">River</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1332</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b9">
+      <div class="booth-header" data-toggle="b9">
+        <div class="walking-num">11</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">Unchained</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1334</span>
+            <span class="booth-cat">Law</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b15">
+      <div class="booth-header" data-toggle="b15">
+        <div class="walking-num">12</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">VanEck</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1337</span>
+            <span class="booth-cat">Investor</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b10">
+      <div class="booth-header" data-toggle="b10">
+        <div class="walking-num">13</div>
+        <div class="booth-priority ">4</div>
+        <div class="booth-info">
+          <div class="booth-name">eToro</div>
+          <div class="booth-meta">
+            <span class="booth-num">#1750</span>
+            <span class="booth-cat">Brokerage</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b11">
+      <div class="booth-header" data-toggle="b11">
+        <div class="walking-num">14</div>
+        <div class="booth-priority high">8</div>
+        <div class="booth-info">
+          <div class="booth-name">NYDIG</div>
+          <div class="booth-meta">
+            <span class="booth-num">#2102</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b16">
+      <div class="booth-header" data-toggle="b16">
+        <div class="walking-num">15</div>
+        <div class="booth-priority ">6</div>
+        <div class="booth-info">
+          <div class="booth-name">BitGo</div>
+          <div class="booth-meta">
+            <span class="booth-num">#2401 / 2501</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b14">
+      <div class="booth-header" data-toggle="b14">
+        <div class="walking-num">16</div>
+        <div class="booth-priority ">6</div>
+        <div class="booth-info">
+          <div class="booth-name">Ledn</div>
+          <div class="booth-meta">
+            <span class="booth-num">#E3</span>
+            <span class="booth-cat">Exchange</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b13">
+      <div class="booth-header" data-toggle="b13">
+        <div class="walking-num">17</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">KPMG</div>
+          <div class="booth-meta">
+            <span class="booth-num">#E13</span>
+            <span class="booth-cat">Law</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  
+    <div class="booth-card  status-todo" data-id="b12">
+      <div class="booth-header" data-toggle="b12">
+        <div class="walking-num">18</div>
+        <div class="booth-priority high">7</div>
+        <div class="booth-info">
+          <div class="booth-name">Deloitte</div>
+          <div class="booth-meta">
+            <span class="booth-num">#E15</span>
+            <span class="booth-cat">Law</span>
+            
+            
+            
+            
+          </div>
+        </div>
+        <div class="status-dot todo"></div>
+        <div class="chevron">›</div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- TODOS -->
+<div id="tab-todos" class="tab-content" style="display:none">
+  <div class="filters">
+    <button class="filter-chip active" data-todofilter="open">Open</button>
+    <button class="filter-chip" data-todofilter="today">Due today</button>
+    <button class="filter-chip" data-todofilter="overdue">Overdue</button>
+    <button class="filter-chip" data-todofilter="done">Done</button>
+    <button class="filter-chip" data-todofilter="all">All</button>
+  </div>
+  <div class="todo-list-view" id="todoListView"></div>
+</div>
+
+<!-- FOLLOW -->
+<div id="tab-follow" class="tab-content" style="display:none">
+  <div class="todo-list-view" id="followList"></div>
+</div>
+
+<!-- FAB -->
+<div class="fab-row">
+  <button class="fab secondary" onclick="openExport()">⤓ Export</button>
+  <button class="fab" onclick="openAddBooth()">+ Add Booth</button>
+</div>
+
+<!-- ADD BOOTH MODAL -->
+<div class="modal-backdrop" id="addBoothModal">
+  <div class="modal">
+    <h2 class="modal-title">Add booth</h2>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:6px">Name</div>
+      <input type="text" id="newBoothName" placeholder="e.g., Bitstamp">
+    </div>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:6px">Booth #</div>
+      <input type="text" id="newBoothNum" placeholder="e.g., 1234">
+    </div>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:6px">Category</div>
+      <div class="status-picker" id="newBoothCat" style="grid-template-columns:repeat(3,1fr); gap:4px">
+        <button class="status-btn active" data-cat="exchange">Exchange</button>
+        <button class="status-btn" data-cat="law">Law</button>
+        <button class="status-btn" data-cat="investor">Investor</button>
+        <button class="status-btn" data-cat="brokerage">Brokerage</button>
+        <button class="status-btn" data-cat="energy">Energy</button>
+        <button class="status-btn" data-cat="other">Other</button>
+      </div>
+    </div>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:6px">Importance (1-10)</div>
+      <input type="text" id="newBoothImp" placeholder="7">
+    </div>
+    <div class="field">
+      <div class="field-label" style="margin-bottom:6px">Rationale / notes</div>
+      <textarea id="newBoothRationale" placeholder="Why this booth matters..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeAddBooth()">Cancel</button>
+      <button class="btn" onclick="saveNewBooth()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="modal-backdrop" id="exportModal">
+  <div class="modal">
+    <h2 class="modal-title">Export</h2>
+
+    <div class="field">
+      <div class="field-label" style="margin-bottom:8px">Format</div>
+      <div class="status-picker" style="grid-template-columns:repeat(3,1fr); margin-bottom:14px">
+        <button class="status-btn active" data-fmt="xlsx">Excel</button>
+        <button class="status-btn" data-fmt="pdf">PDF</button>
+        <button class="status-btn" data-fmt="text">Text</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label" style="margin-bottom:8px">Content</div>
+      <div class="status-picker" style="margin-bottom:14px">
+        <button class="status-btn active" data-content="full">Full</button>
+        <button class="status-btn" data-content="summary">Summary</button>
+        <button class="status-btn" data-content="todos">Todos</button>
+        <button class="status-btn" data-content="emails">Emails</button>
+        <button class="status-btn" data-content="json">Backup</button>
+      </div>
+    </div>
+
+    <div class="export-output" id="exportOutput" style="display:none"></div>
+    <div id="exportPreview" style="background:var(--bg-input);border:1px solid var(--border);border-radius:6px;padding:14px;font-size:11px;color:var(--text-dim);line-height:1.6"></div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeExport()">Close</button>
+      <button class="btn" onclick="runExport()" id="exportBtn">Download</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND MODAL -->
+<div class="modal-backdrop" id="legendModal">
+  <div class="modal">
+    <h2 class="modal-title">Guide</h2>
+
+    <div class="legend-section">
+      <div class="legend-title">Team sync</div>
+      <div class="sync-info">
+        <strong>Editor name:</strong> who's logging changes (shows on cards).<br>
+        <input class="editor-name-input" id="editorNameInput" placeholder="Your name">
+        <strong>How sync works:</strong> Edits save locally and push to shared storage when you tap <code>Sync</code>, or automatically every 60s when online. Photos sync separately — tap <code>Sync photos</code> on each booth when you have a moment with good wifi.<br><br>
+        <strong>Wifi flaky?</strong> Keep working — everything saves locally. Sync when you have signal.
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <div class="legend-title">Card layout</div>
+      <div class="legend-row">
+        <div class="demo"><div class="walking-num">1</div></div>
+        <div class="desc"><strong>Walking number</strong> — order to walk the floor (booth # ascending).</div>
+      </div>
+      <div class="legend-row">
+        <div class="demo"><div class="booth-priority">5</div></div>
+        <div class="desc"><strong>Importance (1-10)</strong> — your priority rating. 7+ shown in orange to stand out.</div>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <div class="legend-title">Status dot</div>
+      <div class="legend-row">
+        <div class="demo"><div class="status-dot todo"></div></div>
+        <div class="desc"><strong>Empty</strong> — to visit</div>
+      </div>
+      <div class="legend-row">
+        <div class="demo"><div class="status-dot visited"></div></div>
+        <div class="desc"><strong>Blue</strong> — visited (neutral)</div>
+      </div>
+      <div class="legend-row">
+        <div class="demo"><div class="status-dot warm"></div></div>
+        <div class="desc"><strong>Orange</strong> — warm lead</div>
+      </div>
+      <div class="legend-row">
+        <div class="demo"><div class="status-dot hot"></div></div>
+        <div class="desc"><strong>Red (glowing)</strong> — hot lead</div>
+      </div>
+      <div class="legend-row">
+        <div class="demo"><div class="status-dot done"></div></div>
+        <div class="desc"><strong>Green</strong> — closed / no further action</div>
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <div class="legend-title">Photos</div>
+      <div class="sync-info">
+        Photos stay on your phone until you tap <code>Sync photos</code> on a booth. An orange dot on a thumbnail means the photo hasn't synced yet. Up to 5 photos per booth, auto-compressed.
+      </div>
+    </div>
+
+    <div class="legend-section">
+      <div class="legend-title">Data management</div>
+      <div class="sync-info">
+        <strong>Storage location:</strong> <span id="storageInfo">checking…</span><br>
+        <strong>Last save:</strong> <span id="lastSaveInfo">—</span><br><br>
+        Your data lives in your browser's local storage. To keep it safe between sessions, install this as a home-screen app (see install guide). To back up your work, tap Download backup — keeps a JSON copy you can restore from later.
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px">
+        <button class="btn btn-secondary" onclick="downloadBackup()">⤓ Download backup</button>
+        <button class="btn btn-secondary" onclick="restoreBackup()">⤒ Restore backup</button>
+      </div>
+      <button class="btn btn-secondary" style="width:100%; margin-top:6px; color:var(--hot); border-color:var(--hot)" onclick="resetAllData()">Reset all data</button>
+      <input type="file" id="restoreFileInput" accept=".json,application/json" style="display:none">
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeLegend()" style="grid-column:1/-1">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
+  <img id="lightboxImg" alt="">
+</div>
+
+<script>
+/* ============================================================
+   STATE & STORAGE
+   ============================================================ */
+const STORAGE_KEY = 'btc_crm_v3';
+const SHARED_KEY = 'btc-crm-shared-state';
+const PHOTO_KEY_PREFIX = 'btc-crm-photo:';
+const PHOTO_MAX_DIM = 800;
+const PHOTO_QUALITY = 0.7;
+
+const SEED_BOOTHS = [
+  // Original 10
+  { id: 'b1',  name: 'Stand with Crypto / Coinbase', num: '445', cat: 'exchange', imp: 8,
+    rationale: 'Industry standard; strong institutional presence and liquidity. High-volume venue for the gamified trading app. Also probe Coinbase Ventures for investor angle.' },
+  { id: 'b2',  name: 'Robinhood', num: '1037', cat: 'brokerage', imp: 3,
+    rationale: 'Primarily retail-focused; lacks advanced trading tools. Lower priority but possible distribution. Robinhood Ventures invests in fintech — dual-purpose visit.' },
+  { id: 'b3',  name: 'Freedom Law School', num: '1038', cat: 'law', imp: 1,
+    rationale: 'Focuses on controversial tax avoidance; likely skip unless curious.' },
+  { id: 'b4',  name: 'Strike', num: '1150', cat: 'exchange', imp: 6,
+    rationale: 'Excellent for Lightning Network integration and fast payments. Possible micropayment angle for in-app rewards.' },
+  { id: 'b5',  name: 'JH Marlin Law', num: '1168', cat: 'law', imp: 5,
+    rationale: 'Valuable for international structuring or Caribbean citizenship insights — useful for fund/entity structure.' },
+  { id: 'b6',  name: 'Kraken', num: '1250', cat: 'exchange', imp: 9,
+    rationale: 'Top tier for serious traders; excellent charting, API limits, and order types. Prime volume-share target.' },
+  { id: 'b7',  name: 'Gemini', num: '1318', cat: 'exchange', imp: 8,
+    rationale: 'Highly regulated with solid institutional tools and ActiveTrader interface. Strong fit for compliant US offering.' },
+  { id: 'b8',  name: 'River', num: '1332', cat: 'exchange', imp: 7,
+    rationale: 'High-net-worth focus; excellent for heavy Bitcoin accumulation and reserves. Possible HNW user funnel.' },
+  { id: 'b9',  name: 'Unchained', num: '1334', cat: 'law', imp: 7,
+    rationale: 'Crucial for collaborative custody, multisig, and direct-to-cold-storage trading. Custody/security partner candidate.' },
+  { id: 'b10', name: 'eToro', num: '1750', cat: 'brokerage', imp: 4,
+    rationale: 'Heavy focus on social trading rather than in-depth market indicators. Ideological fit with gamified angle.' },
+
+  // Added round 2
+  { id: 'b11', name: 'NYDIG', num: '2102', cat: 'exchange', imp: 8,
+    rationale: 'Institutional Bitcoin platform with deep ties to wirehouses and banks. Premium volume-share partner if you want institutional-grade distribution rather than retail.' },
+  { id: 'b12', name: 'Deloitte', num: 'E15', cat: 'law', imp: 7,
+    rationale: 'Big 4 with deep US fintech and crypto regulatory practice. Heavyweight option for licensing strategy and ongoing compliance — pricey but bankable.' },
+  { id: 'b13', name: 'KPMG', num: 'E13', cat: 'law', imp: 7,
+    rationale: 'Big 4 peer to Deloitte; active in crypto compliance work. Worth meeting both to compare scope, partner fit, and pricing.' },
+  { id: 'b14', name: 'Ledn', num: 'E3', cat: 'exchange', imp: 6,
+    rationale: 'Bitcoin-backed lending plus growing trading-adjacent services. Aggressive on US market — would understand the volume-share thesis quickly.' },
+  { id: 'b15', name: 'VanEck', num: '1337', cat: 'investor', imp: 7,
+    rationale: 'Institutional asset manager with active crypto product lineup; invests in crypto infrastructure. Strong investor candidate for US market entry capital.' },
+  { id: 'b16', name: 'BitGo', num: '2401 / 2501', cat: 'exchange', imp: 6,
+    rationale: 'Custody plus prime services and trading. Hosting their High Roller Summit signals they court the HNW user profile your app may attract.' },
+  { id: 'b17', name: 'ExxonMobil', num: '672', cat: 'energy', imp: 7,
+    rationale: 'Klingspor Energy crossover. Here for the gas-to-Bitcoin flare-gas mining angle. Not a trading-app fit — separate energy-side conversation. Use existing relationships.' },
+  { id: 'b18', name: 'Shell', num: '917', cat: 'energy', imp: 7,
+    rationale: 'Klingspor Energy crossover. Same gas-to-Bitcoin angle as ExxonMobil. Energy + Bitcoin intersection is the unique credibility wedge — use it.' }
+];
+
+let state = loadState();
+let pendingChanges = false;
+let syncInProgress = false;
+
+function defaultState() {
+  return {
+    booths: SEED_BOOTHS.map(b => ({
+      ...b, status: 'todo',
+      contacts: [], todos: [], tags: [], notes: '', photos: [],
+      visitedAt: null, lastEditedBy: null, lastEditedAt: null
+    })),
+    expandedId: null,
+    activeTab: 'booths',
+    activeFilter: 'all',
+    activeTodoFilter: 'open',
+    activeSort: 'walking',
+    editorName: '',
+    version: 1
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      const def = defaultState();
+      const merged = { ...def, ...parsed };
+      merged.booths = (parsed.booths || def.booths).map(b => ({
+        photos: [], lastEditedBy: null, lastEditedAt: null, ...b
+      }));
+      // Ensure photo records have synced flag
+      merged.booths.forEach(b => {
+        b.photos = (b.photos||[]).map(p => ({ synced: false, ...p }));
+      });
+      return merged;
+    }
+  } catch (e) { console.error(e); }
+  return defaultState();
+}
+
+function saveState() {
+  state.version = (state.version||0) + 1;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    lastSavedAt = Date.now();
+    return true;
+  } catch (e) {
+    // Most likely quota exceeded due to photos
+    console.error('Save failed:', e);
+    if (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+      // Try saving without photo data as last resort
+      try {
+        const lite = JSON.parse(JSON.stringify(state));
+        lite.booths.forEach(b => {
+          b.photos = (b.photos||[]).map(p => ({ id: p.id, addedAt: p.addedAt, synced: p.synced, sharedKey: p.sharedKey }));
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(lite));
+        lastSavedAt = Date.now();
+        alert('Storage full — saved everything except photos. Tap Sync photos to push them to shared storage, or remove some.');
+        return true;
+      } catch (e2) {
+        alert('Could not save: storage is full. Download a backup, then Reset to free space.');
+        return false;
+      }
+    }
+    return false;
+  }
+}
+
+/* ============================================================
+   TEAM SYNC (state only — photos sync separately)
+   ============================================================ */
+async function pushStateToShared() {
+  if (!window.storage) return false;
+  try {
+    // Strip photo blobs before pushing — photos sync via separate keys
+    const lite = JSON.parse(JSON.stringify(state));
+    lite.booths.forEach(b => {
+      b.photos = (b.photos||[]).map(p => ({
+        id: p.id, addedAt: p.addedAt, synced: p.synced,
+        sharedKey: p.synced ? PHOTO_KEY_PREFIX + p.id : null
+      }));
+    });
+    await window.storage.set(SHARED_KEY, JSON.stringify({
+      state: lite, pushedAt: Date.now(), pushedBy: state.editorName || 'anonymous'
+    }), true);
+    return true;
+  } catch (e) { console.error('Push:', e); return false; }
+}
+
+async function pullStateFromShared() {
+  if (!window.storage) return null;
+  try {
+    const result = await window.storage.get(SHARED_KEY, true);
+    if (!result || !result.value) return null;
+    return JSON.parse(result.value);
+  } catch (e) {
+    if (e.message && e.message.includes('not found')) return null;
+    console.error('Pull:', e);
+    return null;
+  }
+}
+
+function mergeSharedState(remote) {
+  const remoteState = remote.state;
+  const localMap = new Map(state.booths.map(b => [b.id, b]));
+  const remoteMap = new Map(remoteState.booths.map(b => [b.id, b]));
+  const allIds = new Set([...localMap.keys(), ...remoteMap.keys()]);
+  const merged = [];
+  allIds.forEach(id => {
+    const local = localMap.get(id);
+    const remoteB = remoteMap.get(id);
+    if (local && remoteB) {
+      const localT = local.lastEditedAt || 0;
+      const remoteT = remoteB.lastEditedAt || 0;
+      if (remoteT > localT) {
+        // Take remote, but preserve local photo data (photos sync separately)
+        merged.push({ ...remoteB, photos: local.photos });
+      } else {
+        merged.push(local);
+      }
+    } else if (local) {
+      merged.push(local);
+    } else if (remoteB) {
+      merged.push({ ...remoteB, photos: [] });
+    }
+  });
+  state.booths = merged;
+  saveState();
+}
+
+async function manualSync() {
+  if (syncInProgress) return;
+  syncInProgress = true;
+  setSyncStatus('syncing', 'Syncing…');
+  try {
+    const remote = await pullStateFromShared();
+    if (remote) mergeSharedState(remote);
+    const ok = await pushStateToShared();
+    if (ok) {
+      setSyncStatus('synced', 'Synced ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));
+      pendingChanges = false;
+      renderAll();
+    } else {
+      setSyncStatus('error', 'Sync failed');
+    }
+  } catch (e) {
+    console.error(e);
+    setSyncStatus('error', 'Sync failed');
+  } finally {
+    syncInProgress = false;
+  }
+}
+
+function setSyncStatus(s, label) {
+  const btn = document.getElementById('syncBtn');
+  btn.classList.remove('syncing','synced','error');
+  if (s) btn.classList.add(s);
+  document.getElementById('syncLabel').textContent = label;
+}
+
+setInterval(() => {
+  if (navigator.onLine && pendingChanges && !syncInProgress) manualSync();
+}, 60000);
+
+window.addEventListener('online', () => { if (pendingChanges) manualSync(); });
+
+function markChanged(boothId) {
+  if (boothId) {
+    const b = state.booths.find(x => x.id === boothId);
+    if (b) {
+      b.lastEditedAt = Date.now();
+      b.lastEditedBy = state.editorName || 'anonymous';
+    }
+  }
+  pendingChanges = true;
+  // Show "Saved locally" — saveState writes to localStorage immediately on every change
+  // Team sync (window.storage) happens separately on tap or every 60s
+  setSyncStatus('synced', 'Saved');
+  // Briefly flash to show the save happened
+  const btn = document.getElementById('syncBtn');
+  if (btn) {
+    btn.style.transition = 'background 0.2s';
+    btn.style.background = 'rgba(62,196,135,0.25)';
+    setTimeout(() => { btn.style.background = ''; }, 250);
+  }
+}
+
+/* ============================================================
+   PHOTO SYNC (per-booth, manual)
+   ============================================================ */
+async function syncBoothPhotos(boothId, btnEl) {
+  if (!window.storage) {
+    alert('Photo sync requires online connection');
+    return;
+  }
+  const b = state.booths.find(x => x.id === boothId);
+  if (!b) return;
+
+  if (btnEl) {
+    btnEl.classList.add('syncing');
+    btnEl.textContent = 'Syncing…';
+  }
+
+  try {
+    // Push unsynced photos
+    const unsynced = b.photos.filter(p => !p.synced && p.data);
+    for (const photo of unsynced) {
+      try {
+        await window.storage.set(PHOTO_KEY_PREFIX + photo.id, photo.data, true);
+        photo.synced = true;
+      } catch (e) {
+        console.error('Photo push failed:', photo.id, e);
+      }
+    }
+
+    // Pull photos that have a sharedKey but no local data
+    for (const photo of b.photos) {
+      if (photo.sharedKey && !photo.data) {
+        try {
+          const result = await window.storage.get(PHOTO_KEY_PREFIX + photo.id, true);
+          if (result && result.value) {
+            photo.data = result.value;
+            photo.synced = true;
+          }
+        } catch (e) {
+          // not found is ok
+        }
+      }
+    }
+
+    saveState();
+    if (btnEl) {
+      btnEl.classList.remove('syncing');
+      btnEl.textContent = '✓ Synced';
+      setTimeout(() => {
+        btnEl.textContent = 'Sync photos';
+        renderBooths();
+      }, 1500);
+    } else {
+      renderBooths();
+    }
+  } catch (e) {
+    console.error(e);
+    if (btnEl) {
+      btnEl.classList.remove('syncing');
+      btnEl.textContent = 'Failed';
+      setTimeout(() => btnEl.textContent = 'Sync photos', 2000);
+    }
+  }
+}
+
+/* ============================================================
+   PITCH TAGS
+   ============================================================ */
+const PITCH_TAGS = {
+  exchange: ['Volume share interest','Wants demo','Likes gamification angle','Concerned about US regs','Decision maker met','Need to escalate','Asked for term sheet','Competitor partnership','Lukewarm','Hard pass'],
+  law: ['US fintech expertise','Securities angle ok','Wants engagement letter','Conflict check needed','Cited cost concern','Offered intro to peer','Hard pass'],
+  investor: ['Active US fintech thesis','Wants pitch deck','Wants live demo','Asked for traction data','Co-invest interest','Will intro to partner','Hard pass'],
+  brokerage: ['Distribution interest','API integration possible','Compliance gating','Hard pass'],
+  energy: ['Flare-gas mining interest','Existing relationship','Open to JV','Wants Klingspor capability deck','Internal champion identified','Compliance gating','Follow up Q3'],
+  other: ['Useful contact','Follow up later']
+};
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function $(s) { return document.querySelector(s); }
+function $$(s) { return [...document.querySelectorAll(s)]; }
+function escapeHtml(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+function categoryLabel(cat) {
+  return ({exchange:'Exchange',law:'Law',investor:'Investor',brokerage:'Brokerage',energy:'Energy',other:'Other'})[cat] || cat;
+}
+
+/* ============================================================
+   PHOTO HANDLING
+   ============================================================ */
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > h && w > PHOTO_MAX_DIM) { h = h * (PHOTO_MAX_DIM/w); w = PHOTO_MAX_DIM; }
+        else if (h > PHOTO_MAX_DIM) { w = w * (PHOTO_MAX_DIM/h); h = PHOTO_MAX_DIM; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', PHOTO_QUALITY));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function handlePhotoUpload(boothId, fileInput) {
+  const files = [...fileInput.files];
+  const b = state.booths.find(x => x.id === boothId);
+  if (!b) return;
+  for (const file of files) {
+    if (b.photos.length >= 5) { alert('Max 5 photos per booth'); break; }
+    try {
+      const dataUrl = await compressImage(file);
+      b.photos.push({
+        id: 'p' + Date.now() + Math.random().toString(36).slice(2,6),
+        data: dataUrl, addedAt: Date.now(), synced: false
+      });
+    } catch (e) { console.error(e); }
+  }
+  fileInput.value = '';
+  markChanged(boothId);
+  saveState();
+  renderBooths();
+}
+
+function openLightbox(dataUrl) {
+  $('#lightboxImg').src = dataUrl;
+  $('#lightbox').classList.add('open');
+}
+function closeLightbox(e) {
+  if (e) e.stopPropagation();
+  $('#lightbox').classList.remove('open');
+}
+
+/* ============================================================
+   EMAIL DRAFT
+   ============================================================ */
+function generateEmailDraft(b) {
+  if (!b.tags.length && !b.notes) return '';
+  const primary = b.contacts[0];
+  const greeting = primary && primary.name
+    ? `Hi ${primary.name.split(' ')[0]},`
+    : `Hey ${b.name} team,`;
+  let opener = `Great chatting at the Bitcoin Conference — thanks for the time.`;
+  let body = '';
+  let signoff = `Talk soon,\nConrad`;
+
+  if (b.cat === 'exchange') {
+    if (b.tags.includes('Volume share interest') || b.tags.includes('Wants demo')) {
+      body += `\n\nQuick recap on what we're building: a gamified Bitcoin trading app, and we're looking for an exchange partner that can handle the volume our users will generate. ${b.tags.includes('Wants demo') ? "Happy to set up a demo this week — what works for your team?" : "Worth a follow-up call to walk through the volume-share numbers?"}`;
+    } else if (b.tags.includes('Asked for term sheet')) {
+      body += `\n\nAs promised, I'll get a draft term sheet over to you by end of week — covering the volume-share structure and integration scope. Let me know if there's anything specific you want me to address upfront.`;
+    } else if (b.tags.includes('Concerned about US regs')) {
+      body += `\n\nOn the US reg question — totally fair concern. We're structuring this as a software/UX layer that plugs into existing exchange rails (i.e., no new licensing on your end). Happy to share the compliance memo we're putting together with counsel.`;
+    } else if (b.tags.includes('Decision maker met') || b.tags.includes('Need to escalate')) {
+      body += `\n\nCould you point me to the right person on your BD or partnerships side? Happy to come prepped with volume projections and integration scope so it's a useful first call for them.`;
+    } else {
+      body += `\n\nWanted to keep the conversation going — would love to dig into how a gamified trading layer could route serious volume your way. Open to a quick call?`;
+    }
+  } else if (b.cat === 'law') {
+    if (b.tags.includes('Wants engagement letter') || b.tags.includes('US fintech expertise')) {
+      body += `\n\nQuick context: we're launching a gamified Bitcoin trading app in the US and need counsel to help us navigate the regulatory side — money transmission, securities/commodities lines, exchange partnership agreements. Would love to move toward an engagement letter and a conflicts check when you're ready.`;
+    } else if (b.tags.includes('Conflict check needed')) {
+      body += `\n\nFor the conflicts check — working counterparty list is mostly exchanges (TBD) and we'd be operating as a software/UX layer, not a regulated venue. Happy to send a one-pager if it helps speed things up.`;
+    } else {
+      body += `\n\nWould love to set up a follow-up to talk through your firm's relevant experience and where we might work together on the US side.`;
+    }
+  } else if (b.cat === 'investor') {
+    if (b.tags.includes('Wants pitch deck') || b.tags.includes('Wants live demo')) {
+      body += `\n\nI'll send the deck over shortly${b.tags.includes('Wants live demo') ? " and pencil in a live demo for early next week" : ""}. Quick refresher: gamified Bitcoin trading layer, volume-share economics at the exchange level, building toward US launch.`;
+    } else if (b.tags.includes('Asked for traction data')) {
+      body += `\n\nFollowing up with the traction numbers — I'll get a clean one-pager over by end of week (CAC, retention, projected exchange-volume economics).`;
+    } else if (b.tags.includes('Co-invest interest') || b.tags.includes('Will intro to partner')) {
+      body += `\n\nReally appreciate the interest and the offer to intro me to your partner. I'll send the deck and a short founder note so you've got something to forward.`;
+    } else {
+      body += `\n\nWould love to set up a proper call to walk through the opportunity in more depth.`;
+    }
+  } else if (b.cat === 'brokerage') {
+    body += `\n\nWanted to follow up on what we discussed — happy to dig deeper on distribution or integration options for the gamified trading product whenever you've got time.`;
+  } else if (b.cat === 'energy') {
+    if (b.tags.includes('Flare-gas mining interest') || b.tags.includes('Open to JV')) {
+      body += `\n\nFollowing up on the flare-gas mining conversation. Quick context on me — Klingspor Energy is structuring a US-led upstream platform in Venezuela (targeting 150k b/d), and we're actively looking at gas-monetization plays at scale. Worth a longer chat with the right people on your side?`;
+    } else if (b.tags.includes('Wants Klingspor capability deck')) {
+      body += `\n\nAs discussed, I'll send over the Klingspor capability deck and our current Venezuela platform thesis. The energy/Bitcoin intersection is something we're paying serious attention to right now.`;
+    } else {
+      body += `\n\nGood to reconnect on the energy side. Klingspor is active on US-led upstream in Venezuela and looking hard at stranded-gas monetization. Let's set up a proper call when you've got time.`;
+    }
+  } else {
+    body += `\n\nFollowing up on our chat — I'll be in touch separately on the items we discussed.`;
+  }
+
+  if (b.notes) {
+    body += `\n\nQuick notes from our conversation so I don't drop anything:\n` +
+      b.notes.split(/\n+/).filter(Boolean).slice(0,4).map(l => `  · ${l.replace(/^[\s·•\-]+/, '')}`).join('\n');
+  }
+  const openTodos = b.todos.filter(t => !t.done && t.text);
+  if (openTodos.length) {
+    body += `\n\nOn my side:\n` + openTodos.map(t => `  · ${t.text}${t.due ? ` (by ${t.due})` : ''}`).join('\n');
+  }
+  body += `\n\nLet me know what works — I'm back in Houston this week and flexible on timing.`;
+  return `${greeting}\n\n${opener}${body}\n\n${signoff}`;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function renderStats() {
+  const total = state.booths.length;
+  const visited = state.booths.filter(b => ['visited','warm','hot','done'].includes(b.status)).length;
+  const hot = state.booths.filter(b => b.status === 'hot').length;
+  const todos = state.booths.flatMap(b => b.todos).filter(t => !t.done).length;
+  $('#statTotal').textContent = total;
+  $('#statVisited').textContent = visited;
+  $('#statHot').textContent = hot;
+  $('#statTodos').textContent = todos;
+  $('#tabBoothsCount').textContent = total;
+  $('#tabTodosCount').textContent = todos;
+  $('#tabFollowCount').textContent = state.booths.filter(b => ['hot','warm'].includes(b.status)).length;
+}
+
+// Walking order: parse as a sortable key. Expo booths (E-prefix) and
+// suite-style booths get a high prefix so they sort after the main floor.
+function parseBoothNum(s) {
+  if (!s) return 999999;
+  s = String(s).trim();
+  if (/^E\d+/i.test(s)) {
+    const n = parseInt(s.match(/\d+/)[0]);
+    return 800000 + n;
+  }
+  if (/^K\d+/i.test(s)) {
+    const n = parseInt(s.match(/\d+/)[0]);
+    return 850000 + n;
+  }
+  const m = s.match(/(\d+)/);
+  return m ? parseInt(m[1]) : 999999;
+}
+
+function getSortedBooths() {
+  let arr = [...state.booths];
+  const sort = state.activeSort;
+  if (sort === 'walking') {
+    arr.sort((a,b) => parseBoothNum(a.num) - parseBoothNum(b.num));
+  } else if (sort === 'status') {
+    const order = { hot:0, warm:1, visited:2, todo:3, done:4, skip:5 };
+    arr.sort((a,b) => {
+      const sa = order[a.status] ?? 9, sb = order[b.status] ?? 9;
+      if (sa !== sb) return sa - sb;
+      return (b.imp||0) - (a.imp||0);
+    });
+  } else if (sort === 'importance') {
+    arr.sort((a,b) => (b.imp||0) - (a.imp||0));
+  } else if (sort === 'alpha') {
+    arr.sort((a,b) => a.name.localeCompare(b.name));
+  }
+  return arr;
+}
+
+function renderBooths() {
+  const list = $('#boothList');
+  let booths = getSortedBooths();
+  const walkOrder = [...state.booths]
+    .sort((a,b) => parseBoothNum(a.num) - parseBoothNum(b.num))
+    .reduce((acc, b, i) => { acc[b.id] = i+1; return acc; }, {});
+
+  const f = state.activeFilter;
+  if (['todo','visited','hot','warm','done','skip'].includes(f)) {
+    booths = booths.filter(b => b.status === f);
+  } else if (['exchange','law','investor','brokerage','energy','other'].includes(f)) {
+    booths = booths.filter(b => b.cat === f);
+  }
+
+  if (!booths.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">∅</div>No booths match this filter</div>`;
+    return;
+  }
+  list.innerHTML = booths.map(b => renderBoothCard(b, walkOrder[b.id])).join('');
+  attachBoothHandlers();
+}
+
+function renderBoothCard(b, walkPos) {
+  const expanded = state.expandedId === b.id;
+  const photoCount = (b.photos||[]).length;
+  const editor = b.lastEditedBy && b.lastEditedBy !== state.editorName ? b.lastEditedBy : null;
+  const impClass = (b.imp||0) >= 7 ? 'high' : '';
+  return `
+    <div class="booth-card ${expanded?'expanded':''} status-${b.status}" data-id="${b.id}">
+      <div class="booth-header" data-toggle="${b.id}">
+        <div class="walking-num">${walkPos||'–'}</div>
+        <div class="booth-priority ${impClass}">${b.imp||'–'}</div>
+        <div class="booth-info">
+          <div class="booth-name">${escapeHtml(b.name)}</div>
+          <div class="booth-meta">
+            <span class="booth-num">#${escapeHtml(b.num||'?')}</span>
+            <span class="booth-cat">${categoryLabel(b.cat)}</span>
+            ${b.contacts.length ? `<span>· ${b.contacts.length} contact${b.contacts.length>1?'s':''}</span>` : ''}
+            ${photoCount ? `<span class="photo-badge">📷 ${photoCount}</span>` : ''}
+            ${b.todos.filter(t=>!t.done).length ? `<span>· ${b.todos.filter(t=>!t.done).length} todo</span>` : ''}
+            ${editor ? `<span class="editor-tag">by ${escapeHtml(editor)}</span>` : ''}
+          </div>
+        </div>
+        <div class="status-dot ${b.status}"></div>
+        <div class="chevron">›</div>
+      </div>
+      ${expanded ? renderBoothBody(b) : ''}
+    </div>
+  `;
+}
+
+function renderBoothBody(b) {
+  const photos = b.photos || [];
+  const unsyncedCount = photos.filter(p => !p.synced).length;
+  const missingDataCount = photos.filter(p => !p.data && p.sharedKey).length;
+  const showPhotoSync = unsyncedCount > 0 || missingDataCount > 0;
+
+  return `
+    <div class="booth-body">
+      ${b.rationale ? `<div class="rationale">${escapeHtml(b.rationale)}</div>` : ''}
+
+      <div class="field">
+        <div class="field-label">Status</div>
+        <div class="status-picker" data-statusfor="${b.id}" style="margin-top:6px">
+          ${['todo','visited','warm','hot','done'].map(s =>
+            `<button class="status-btn ${b.status===s?'active '+s:''}" data-status="${s}">${s}</button>`
+          ).join('')}
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-header">
+          <span class="field-label">Photos · cards / badges (max 5)</span>
+          ${showPhotoSync ? `<button class="field-action" data-syncphotos="${b.id}">Sync photos</button>` : ''}
+        </div>
+        <div class="photos-row">
+          ${photos.map(p => p.data ? `
+            <div class="photo-thumb ${!p.synced?'unsynced':''}">
+              <img src="${p.data}" alt="" data-photo="${p.data}" />
+              <button class="photo-remove" data-rmphoto="${p.id}" data-boothid="${b.id}">×</button>
+            </div>
+          ` : `
+            <div class="photo-thumb" style="display:flex;align-items:center;justify-content:center;color:var(--text-faint);font-size:9px;text-align:center">
+              Tap Sync<br/>to load
+            </div>
+          `).join('')}
+          ${photos.length < 5 ? `
+            <label class="photo-add-btn" for="photo-${b.id}">
+              <span>📷</span>
+              <span class="label">Add</span>
+            </label>
+            <input type="file" class="photo-input" id="photo-${b.id}"
+                   accept="image/*" capture="environment" multiple
+                   data-boothphoto="${b.id}" />
+          ` : ''}
+        </div>
+        ${unsyncedCount ? `<div class="photo-status"><span class="unsynced">●</span> ${unsyncedCount} photo${unsyncedCount>1?'s':''} not synced to team</div>` : ''}
+      </div>
+
+      <div class="field">
+        <div class="field-label">Contacts met</div>
+        <div data-contactsfor="${b.id}" style="margin-top:6px">
+          ${b.contacts.map((c,i) => `
+            <div class="contact-row">
+              <div class="contact-fields">
+                <input type="text" placeholder="Name" value="${escapeAttr(c.name||'')}" data-cidx="${i}" data-cfield="name" />
+                <input type="text" placeholder="Role / title" value="${escapeAttr(c.role||'')}" data-cidx="${i}" data-cfield="role" />
+                <input type="email" placeholder="Email" value="${escapeAttr(c.email||'')}" data-cidx="${i}" data-cfield="email" />
+              </div>
+              <button class="icon-btn" data-removec="${i}">×</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="add-btn" data-addcontact="${b.id}">+ Add contact</button>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Pitch outcome / notes</div>
+        <textarea data-notes="${b.id}" placeholder="What was discussed, key reactions, who they suggested I talk to next..." style="margin-top:6px">${escapeHtml(b.notes||'')}</textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Tags (drives email draft)</div>
+        <div class="tags" data-tagsfor="${b.id}" style="margin-top:6px">
+          ${(PITCH_TAGS[b.cat] || PITCH_TAGS.other).map(t =>
+            `<div class="tag ${b.tags.includes(t)?'active':''}" data-tag="${escapeAttr(t)}">${t}</div>`
+          ).join('')}
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Action items</div>
+        <div data-todosfor="${b.id}" style="margin-top:6px">
+          ${b.todos.map((t,i) => `
+            <div class="todo-row">
+              <input type="checkbox" class="todo-check" ${t.done?'checked':''} data-tidx="${i}" data-tfield="done" />
+              <input type="text" class="${t.done?'done':''}" value="${escapeAttr(t.text||'')}" data-tidx="${i}" data-tfield="text" placeholder="What to do" />
+              <input type="date" value="${escapeAttr(t.due||'')}" data-tidx="${i}" data-tfield="due" />
+              <button class="icon-btn" data-removet="${i}">×</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="add-btn" data-addtodo="${b.id}">+ Add todo</button>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Follow-up email — auto-drafted</div>
+        <div class="email-draft" id="emailDraft-${b.id}" style="margin-top:6px">${generateEmailDraft(b) || '<span style="color:var(--text-faint)">Tag the meeting above to generate a draft.</span>'}</div>
+        <div class="email-actions">
+          <button class="btn btn-secondary" data-regenerate="${b.id}">↻ Regenerate</button>
+          <button class="btn" data-copyemail="${b.id}">Copy email</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   HANDLERS — using event delegation on the booth list
+   This avoids the mobile-Safari issue where re-rendering
+   destroys event listeners between touchstart and click.
+   ============================================================ */
+let boothListHandlersAttached = false;
+
+function attachBoothHandlers() {
+  // Only attach delegated listeners ONCE, on the stable container
+  if (boothListHandlersAttached) return;
+  boothListHandlersAttached = true;
+
+  const list = document.getElementById('boothList');
+
+  // Click delegation — handles every clickable element by data attribute
+  list.addEventListener('click', e => {
+    const t = e.target;
+
+    // 1) Toggle expand/collapse — only when clicking the header itself
+    //    (not buttons inside it; the header has no buttons but card body might bubble up)
+    const header = t.closest('.booth-header[data-toggle]');
+    const insideBody = t.closest('.booth-body');
+    if (header && !insideBody) {
+      const id = header.dataset.toggle;
+      state.expandedId = state.expandedId === id ? null : id;
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 2) Status button
+    const statusBtn = t.closest('[data-status]');
+    if (statusBtn) {
+      const picker = statusBtn.closest('[data-statusfor]');
+      if (picker) {
+        const b = state.booths.find(x => x.id === picker.dataset.statusfor);
+        b.status = statusBtn.dataset.status;
+        if (['visited','warm','hot','done'].includes(b.status) && !b.visitedAt) {
+          b.visitedAt = new Date().toISOString();
+        }
+        markChanged(b.id);
+        saveState();
+        renderAll();
+      }
+      return;
+    }
+
+    // 3) Tag click
+    const tagEl = t.closest('[data-tag]');
+    if (tagEl) {
+      const tagsContainer = tagEl.closest('[data-tagsfor]');
+      if (tagsContainer) {
+        const b = state.booths.find(x => x.id === tagsContainer.dataset.tagsfor);
+        const tag = tagEl.dataset.tag;
+        const i = b.tags.indexOf(tag);
+        if (i >= 0) b.tags.splice(i,1); else b.tags.push(tag);
+        markChanged(b.id);
+        saveState();
+        tagEl.classList.toggle('active');
+        const ed = document.getElementById('emailDraft-' + b.id);
+        if (ed) ed.textContent = generateEmailDraft(b);
+      }
+      return;
+    }
+
+    // 4) Add contact
+    const addContact = t.closest('[data-addcontact]');
+    if (addContact) {
+      const b = state.booths.find(x => x.id === addContact.dataset.addcontact);
+      b.contacts.push({ name:'', role:'', email:'' });
+      markChanged(b.id);
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 5) Remove contact
+    const removeContact = t.closest('[data-removec]');
+    if (removeContact) {
+      const container = removeContact.closest('[data-contactsfor]');
+      const b = state.booths.find(x => x.id === container.dataset.contactsfor);
+      b.contacts.splice(parseInt(removeContact.dataset.removec),1);
+      markChanged(b.id);
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 6) Add todo
+    const addTodo = t.closest('[data-addtodo]');
+    if (addTodo) {
+      const b = state.booths.find(x => x.id === addTodo.dataset.addtodo);
+      b.todos.push({ text:'', due:'', done:false });
+      markChanged(b.id);
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 7) Remove todo
+    const removeTodo = t.closest('[data-removet]');
+    if (removeTodo) {
+      const container = removeTodo.closest('[data-todosfor]');
+      const b = state.booths.find(x => x.id === container.dataset.todosfor);
+      b.todos.splice(parseInt(removeTodo.dataset.removet),1);
+      markChanged(b.id);
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 8) Regenerate email
+    const regen = t.closest('[data-regenerate]');
+    if (regen) {
+      const b = state.booths.find(x => x.id === regen.dataset.regenerate);
+      document.getElementById('emailDraft-' + b.id).textContent = generateEmailDraft(b);
+      return;
+    }
+
+    // 9) Copy email
+    const copyEmail = t.closest('[data-copyemail]');
+    if (copyEmail) {
+      const b = state.booths.find(x => x.id === copyEmail.dataset.copyemail);
+      const text = generateEmailDraft(b);
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = copyEmail.textContent;
+        copyEmail.textContent = 'Copied ✓';
+        setTimeout(() => copyEmail.textContent = orig, 1500);
+      }).catch(() => {
+        // Fallback for older mobile browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); copyEmail.textContent = 'Copied ✓'; } catch(e) {}
+        document.body.removeChild(ta);
+        setTimeout(() => renderBooths(), 1500);
+      });
+      return;
+    }
+
+    // 10) Photo lightbox
+    const photoImg = t.closest('[data-photo]');
+    if (photoImg) {
+      openLightbox(photoImg.dataset.photo);
+      return;
+    }
+
+    // 11) Remove photo
+    const rmPhoto = t.closest('[data-rmphoto]');
+    if (rmPhoto) {
+      const id = rmPhoto.dataset.boothid;
+      const pid = rmPhoto.dataset.rmphoto;
+      const b = state.booths.find(x => x.id === id);
+      b.photos = b.photos.filter(p => p.id !== pid);
+      markChanged(id);
+      saveState();
+      renderBooths();
+      return;
+    }
+
+    // 12) Sync photos for booth
+    const syncPhotos = t.closest('[data-syncphotos]');
+    if (syncPhotos) {
+      syncBoothPhotos(syncPhotos.dataset.syncphotos, syncPhotos);
+      return;
+    }
+  });
+
+  // Input delegation (notes, contact fields, todo text/date)
+  list.addEventListener('input', e => {
+    const t = e.target;
+
+    // Notes textarea
+    if (t.matches('[data-notes]')) {
+      const b = state.booths.find(x => x.id === t.dataset.notes);
+      b.notes = t.value;
+      markChanged(b.id);
+      saveState();
+      const ed = document.getElementById('emailDraft-' + b.id);
+      if (ed) ed.textContent = generateEmailDraft(b);
+      return;
+    }
+
+    // Contact fields
+    if (t.dataset.cidx !== undefined && t.dataset.cfield) {
+      const container = t.closest('[data-contactsfor]');
+      const b = state.booths.find(x => x.id === container.dataset.contactsfor);
+      b.contacts[t.dataset.cidx][t.dataset.cfield] = t.value;
+      markChanged(b.id);
+      saveState();
+      const ed = document.getElementById('emailDraft-' + b.id);
+      if (ed) ed.textContent = generateEmailDraft(b);
+      return;
+    }
+
+    // Todo text/date
+    if (t.dataset.tidx !== undefined && t.dataset.tfield && t.type !== 'checkbox') {
+      const container = t.closest('[data-todosfor]');
+      const b = state.booths.find(x => x.id === container.dataset.todosfor);
+      b.todos[t.dataset.tidx][t.dataset.tfield] = t.value;
+      markChanged(b.id);
+      saveState();
+      return;
+    }
+  });
+
+  // Change delegation (checkboxes and file input)
+  list.addEventListener('change', e => {
+    const t = e.target;
+
+    // Todo checkbox
+    if (t.type === 'checkbox' && t.dataset.tidx !== undefined && t.dataset.tfield === 'done') {
+      const container = t.closest('[data-todosfor]');
+      const b = state.booths.find(x => x.id === container.dataset.todosfor);
+      b.todos[t.dataset.tidx].done = t.checked;
+      markChanged(b.id);
+      saveState();
+      renderStats();
+      const textInput = t.closest('.todo-row').querySelector('input[type="text"]');
+      if (textInput) textInput.classList.toggle('done', t.checked);
+      return;
+    }
+
+    // Photo file input
+    if (t.matches('[data-boothphoto]')) {
+      handlePhotoUpload(t.dataset.boothphoto, t);
+      return;
+    }
+  });
+}
+
+/* ============================================================
+   TODOS / FOLLOW
+   ============================================================ */
+function renderTodos() {
+  const f = state.activeTodoFilter;
+  const today = new Date().toISOString().slice(0,10);
+  let items = [];
+  state.booths.forEach(b => b.todos.forEach((t,i) => {
+    items.push({ ...t, boothId: b.id, boothName: b.name, idx: i });
+  }));
+  if (f === 'open') items = items.filter(t => !t.done);
+  else if (f === 'done') items = items.filter(t => t.done);
+  else if (f === 'today') items = items.filter(t => !t.done && t.due === today);
+  else if (f === 'overdue') items = items.filter(t => !t.done && t.due && t.due < today);
+
+  items.sort((a,b) => {
+    if (a.done !== b.done) return a.done ? 1 : -1;
+    if (!a.due && b.due) return 1;
+    if (a.due && !b.due) return -1;
+    if (a.due && b.due) return a.due.localeCompare(b.due);
+    return 0;
+  });
+
+  const list = $('#todoListView');
+  if (!items.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">✓</div>${f==='open'?'No open todos. Nice.':'Nothing to show.'}</div>`;
+    return;
+  }
+  list.innerHTML = items.map(t => {
+    let dueClass = '', dueText = t.due || '';
+    if (t.due) {
+      if (t.due < today) dueClass = 'overdue';
+      else if (t.due === today) { dueClass = 'today'; dueText = 'Due today'; }
+    }
+    return `
+      <div class="todo-item ${t.done?'done':''}">
+        <input type="checkbox" class="todo-check" ${t.done?'checked':''} data-globalbooth="${t.boothId}" data-globalidx="${t.idx}" />
+        <div>
+          <div class="todo-text">${escapeHtml(t.text||'(no description)')}</div>
+          <div class="todo-source" data-jumpto="${t.boothId}">→ ${escapeHtml(t.boothName)}</div>
+          ${dueText ? `<div class="todo-due ${dueClass}">${escapeHtml(dueText)}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+  $$('[data-globalbooth]').forEach(input => {
+    input.addEventListener('change', () => {
+      const b = state.booths.find(x => x.id === input.dataset.globalbooth);
+      b.todos[input.dataset.globalidx].done = input.checked;
+      markChanged(b.id);
+      saveState();
+      renderAll();
+    });
+  });
+  $$('[data-jumpto]').forEach(el => {
+    el.addEventListener('click', () => {
+      state.expandedId = el.dataset.jumpto;
+      state.activeTab = 'booths';
+      saveState();
+      renderAll();
+      setTimeout(() => document.querySelector(`[data-id="${el.dataset.jumpto}"]`)?.scrollIntoView({behavior:'smooth',block:'start'}), 50);
+    });
+  });
+}
+
+function renderFollow() {
+  const list = $('#followList');
+  const followBooths = state.booths.filter(b => ['hot','warm'].includes(b.status));
+  if (!followBooths.length) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">⌛</div>No hot or warm booths yet. Tag your meetings to populate this list.</div>`;
+    return;
+  }
+  followBooths.sort((a,b) => {
+    if (a.status === 'hot' && b.status !== 'hot') return -1;
+    if (a.status !== 'hot' && b.status === 'hot') return 1;
+    return (b.imp||0) - (a.imp||0);
+  });
+  list.innerHTML = followBooths.map(b => `
+    <div class="todo-item">
+      <div class="status-dot ${b.status}"></div>
+      <div>
+        <div class="todo-text" style="font-weight:600">${escapeHtml(b.name)}</div>
+        <div class="todo-source" data-jumpto="${b.id}">→ Open meeting record</div>
+        ${b.contacts.length ? `<div class="todo-due">${b.contacts.map(c => escapeHtml(c.name||c.email||'?')).filter(Boolean).join(' · ')}</div>` : ''}
+        ${b.tags.length ? `<div class="todo-due" style="color:var(--accent)">${escapeHtml(b.tags.slice(0,2).join(' · '))}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+  $$('#followList [data-jumpto]').forEach(el => {
+    el.addEventListener('click', () => {
+      state.expandedId = el.dataset.jumpto;
+      state.activeTab = 'booths';
+      saveState();
+      renderAll();
+    });
+  });
+}
+
+/* ============================================================
+   TABS / FILTERS / SORT
+   ============================================================ */
+$$('.tab').forEach(t => {
+  t.addEventListener('click', () => { state.activeTab = t.dataset.tab; saveState(); renderAll(); });
+});
+$$('#boothFilters .filter-chip').forEach(c => {
+  c.addEventListener('click', () => { state.activeFilter = c.dataset.filter; saveState(); renderAll(); });
+});
+$$('[data-todofilter]').forEach(c => {
+  c.addEventListener('click', () => { state.activeTodoFilter = c.dataset.todofilter; saveState(); renderAll(); });
+});
+$('#sortSelect').addEventListener('change', e => {
+  state.activeSort = e.target.value; saveState(); renderAll();
+});
+
+/* ============================================================
+   ADD BOOTH
+   ============================================================ */
+function openAddBooth() {
+  $('#newBoothName').value = '';
+  $('#newBoothNum').value = '';
+  $('#newBoothImp').value = '';
+  $('#newBoothRationale').value = '';
+  $('#newBoothCat').querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+  $('#newBoothCat').querySelector('[data-cat="exchange"]').classList.add('active');
+  $('#addBoothModal').classList.add('open');
+}
+function closeAddBooth() { $('#addBoothModal').classList.remove('open'); }
+$('#newBoothCat').querySelectorAll('.status-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $('#newBoothCat').querySelectorAll('.status-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+function saveNewBooth() {
+  const name = $('#newBoothName').value.trim();
+  if (!name) { alert('Name required'); return; }
+  const cat = $('#newBoothCat').querySelector('.status-btn.active').dataset.cat;
+  const imp = parseInt($('#newBoothImp').value) || 5;
+  const newB = {
+    id: 'b' + Date.now(), name, num: $('#newBoothNum').value.trim(), cat,
+    imp: Math.max(1, Math.min(10, imp)),
+    rationale: $('#newBoothRationale').value.trim(),
+    status: 'todo', contacts: [], todos: [], tags: [], notes: '', photos: [],
+    visitedAt: null, lastEditedBy: state.editorName, lastEditedAt: Date.now()
+  };
+  state.booths.push(newB);
+  state.expandedId = newB.id;
+  pendingChanges = true;
+  saveState();
+  closeAddBooth();
+  renderAll();
+}
+
+/* ============================================================
+   EXPORT
+   ============================================================ */
+let exportFormat = 'xlsx';
+let exportContent = 'full';
+
+function openExport() {
+  $('#exportModal').classList.add('open');
+  updateExportPreview();
+}
+function closeExport() { $('#exportModal').classList.remove('open'); }
+
+$('#exportModal').querySelectorAll('[data-fmt]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $('#exportModal').querySelectorAll('[data-fmt]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    exportFormat = btn.dataset.fmt;
+    updateExportPreview();
+  });
+});
+$('#exportModal').querySelectorAll('[data-content]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    $('#exportModal').querySelectorAll('[data-content]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    exportContent = btn.dataset.content;
+    updateExportPreview();
+  });
+});
+
+function updateExportPreview() {
+  const preview = $('#exportPreview');
+  const btn = $('#exportBtn');
+  const hot = state.booths.filter(b => b.status === 'hot').length;
+  const warm = state.booths.filter(b => b.status === 'warm').length;
+  const visited = state.booths.filter(b => ['visited','warm','hot','done'].includes(b.status)).length;
+  const todos = state.booths.flatMap(b=>b.todos).filter(t=>!t.done).length;
+
+  let summary = '';
+  if (exportContent === 'full') summary = `${state.booths.length} booths · ${visited} visited · ${hot} hot · ${warm} warm · ${todos} open todos · all contacts, notes, tags, todos, email drafts`;
+  else if (exportContent === 'summary') summary = `${state.booths.length} booths, status overview only — no notes or contacts`;
+  else if (exportContent === 'todos') summary = `${todos} open todos with due dates and source booth`;
+  else if (exportContent === 'emails') {
+    const candidates = state.booths.filter(b => ['hot','warm','visited'].includes(b.status) && (b.tags.length || b.notes)).length;
+    summary = `${candidates} email draft${candidates!==1?'s':''} ready to send`;
+  }
+  else if (exportContent === 'json') summary = `Full state backup (JSON) — for personal archive only`;
+
+  let formatNote = '';
+  if (exportFormat === 'xlsx') formatNote = '<strong>Excel (.xlsx)</strong> — opens in Excel, Numbers, or Google Sheets. Multiple sheets per export.';
+  else if (exportFormat === 'pdf') formatNote = '<strong>PDF</strong> — clean printable document, easy to share via email or messaging.';
+  else if (exportFormat === 'text') formatNote = '<strong>Plain text</strong> — preview shown, copy to clipboard.';
+
+  if (exportContent === 'json' && exportFormat !== 'text') {
+    formatNote = '<span style="color:var(--accent)">Backup is text-only. Switching to Text format.</span>';
+    btn.disabled = false;
+  }
+
+  preview.innerHTML = `${formatNote}<br/><br/><strong>Will include:</strong> ${summary}`;
+
+  if (exportContent === 'json' && exportFormat !== 'text') {
+    btn.textContent = 'Download as text';
+  } else {
+    btn.textContent = exportFormat === 'text' ? 'Copy to clipboard' : 'Download';
+  }
+}
+
+function runExport() {
+  if (exportContent === 'json') {
+    runTextExport(); return;
+  }
+  if (exportFormat === 'xlsx') runExcelExport();
+  else if (exportFormat === 'pdf') runPdfExport();
+  else runTextExport();
+}
+
+function dateStr() {
+  return new Date().toISOString().slice(0,10);
+}
+function fileBase() {
+  return `BTC2026-CRM-${exportContent}-${dateStr()}`;
+}
+
+/* -------- EXCEL EXPORT -------- */
+function runExcelExport() {
+  if (typeof XLSX === 'undefined') {
+    alert('Excel library not loaded — check your internet connection and reload.');
+    return;
+  }
+  const wb = XLSX.utils.book_new();
+  const today = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+
+  if (exportContent === 'full' || exportContent === 'summary') {
+    // Summary sheet
+    const counts = {
+      total: state.booths.length,
+      visited: state.booths.filter(b => ['visited','warm','hot','done'].includes(b.status)).length,
+      hot: state.booths.filter(b => b.status === 'hot').length,
+      warm: state.booths.filter(b => b.status === 'warm').length,
+      todos: state.booths.flatMap(b=>b.todos).filter(t=>!t.done).length
+    };
+    const summaryData = [
+      ['BTC2026 Conference — Meeting Log'],
+      ['Conrad Müller-Klingspor · Klingspor Energy'],
+      ['Generated', today],
+      [],
+      ['Total booths', counts.total],
+      ['Visited', counts.visited],
+      ['Hot leads', counts.hot],
+      ['Warm leads', counts.warm],
+      ['Open todos', counts.todos]
+    ];
+    const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+    summarySheet['!cols'] = [{wch:30}, {wch:15}];
+    XLSX.utils.book_append_sheet(wb, summarySheet, 'Summary');
+
+    // Booths sheet
+    const boothHeaders = exportContent === 'full'
+      ? ['Booth','Booth #','Category','Importance','Status','Tags','Notes','# Contacts','# Open Todos','Photos','Last Edited By']
+      : ['Booth','Booth #','Category','Importance','Status','Tags'];
+    const boothRows = [...state.booths]
+      .sort((a,b) => {
+        const order = { hot:0, warm:1, visited:2, todo:3, done:4 };
+        const sa = order[a.status] ?? 9, sb = order[b.status] ?? 9;
+        if (sa !== sb) return sa - sb;
+        return (b.imp||0) - (a.imp||0);
+      })
+      .map(b => {
+        const base = [
+          b.name,
+          b.num || '',
+          categoryLabel(b.cat),
+          b.imp || '',
+          b.status,
+          b.tags.join('; ')
+        ];
+        if (exportContent === 'full') {
+          base.push(
+            b.notes || '',
+            b.contacts.length,
+            b.todos.filter(t=>!t.done).length,
+            (b.photos||[]).length,
+            b.lastEditedBy || ''
+          );
+        }
+        return base;
+      });
+    const boothSheet = XLSX.utils.aoa_to_sheet([boothHeaders, ...boothRows]);
+    boothSheet['!cols'] = exportContent === 'full'
+      ? [{wch:32},{wch:10},{wch:12},{wch:11},{wch:10},{wch:30},{wch:50},{wch:11},{wch:13},{wch:8},{wch:18}]
+      : [{wch:32},{wch:10},{wch:12},{wch:11},{wch:10},{wch:30}];
+    XLSX.utils.book_append_sheet(wb, boothSheet, 'Booths');
+
+    if (exportContent === 'full') {
+      // Contacts sheet
+      const contactRows = [['Booth','Name','Role','Email','Status','Date Met']];
+      state.booths.forEach(b => {
+        b.contacts.forEach(c => {
+          if (c.name || c.email) {
+            contactRows.push([
+              b.name, c.name||'', c.role||'', c.email||'',
+              b.status, b.visitedAt ? b.visitedAt.slice(0,10) : ''
+            ]);
+          }
+        });
+      });
+      if (contactRows.length > 1) {
+        const ws = XLSX.utils.aoa_to_sheet(contactRows);
+        ws['!cols'] = [{wch:32},{wch:22},{wch:22},{wch:30},{wch:10},{wch:12}];
+        XLSX.utils.book_append_sheet(wb, ws, 'Contacts');
+      }
+
+      // Todos sheet
+      const todoRows = [['Booth','Task','Due Date','Status']];
+      state.booths.forEach(b => {
+        b.todos.forEach(t => {
+          if (t.text) todoRows.push([b.name, t.text, t.due||'', t.done?'Done':'Open']);
+        });
+      });
+      if (todoRows.length > 1) {
+        const ws = XLSX.utils.aoa_to_sheet(todoRows);
+        ws['!cols'] = [{wch:32},{wch:50},{wch:12},{wch:10}];
+        XLSX.utils.book_append_sheet(wb, ws, 'Todos');
+      }
+    }
+  }
+
+  if (exportContent === 'todos') {
+    const today_iso = dateStr();
+    const rows = [['Task','Booth','Due Date','Days from today']];
+    const items = [];
+    state.booths.forEach(b => b.todos.forEach(t => {
+      if (!t.done && t.text) items.push({ ...t, booth: b.name });
+    }));
+    items.sort((a,b) => (a.due||'9').localeCompare(b.due||'9'));
+    items.forEach(t => {
+      let delta = '';
+      if (t.due) {
+        const d = (new Date(t.due) - new Date(today_iso)) / 86400000;
+        delta = d === 0 ? 'today' : (d < 0 ? `${Math.abs(d)} overdue` : `in ${d}`);
+      }
+      rows.push([t.text, t.booth, t.due||'', delta]);
+    });
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:50},{wch:32},{wch:12},{wch:14}];
+    XLSX.utils.book_append_sheet(wb, ws, 'Open Todos');
+  }
+
+  if (exportContent === 'emails') {
+    const candidates = state.booths.filter(b => ['hot','warm','visited'].includes(b.status) && (b.tags.length || b.notes));
+    const rows = [['Booth','To Name','To Email','Subject','Body','Status','Tags']];
+    candidates.forEach(b => {
+      const c = b.contacts[0] || {};
+      rows.push([
+        b.name,
+        c.name || '',
+        c.email || '',
+        'Following up — Bitcoin Conference',
+        generateEmailDraft(b),
+        b.status,
+        b.tags.join('; ')
+      ]);
+    });
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols'] = [{wch:32},{wch:22},{wch:30},{wch:36},{wch:80},{wch:10},{wch:30}];
+    // Set row heights and wrap text for body column
+    if (!ws['!rows']) ws['!rows'] = [];
+    for (let i = 1; i <= candidates.length; i++) ws['!rows'][i] = { hpx: 120 };
+    XLSX.utils.book_append_sheet(wb, ws, 'Email Drafts');
+  }
+
+  XLSX.writeFile(wb, fileBase() + '.xlsx');
+  flashExportBtn();
+}
+
+/* -------- PDF EXPORT -------- */
+function runPdfExport() {
+  if (typeof window.jspdf === 'undefined') {
+    alert('PDF library not loaded — check your internet connection and reload.');
+    return;
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  const today = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  let y = 50;
+
+  // Header
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(18);
+  doc.text('BTC2026 Conference — Meeting Log', 50, y); y += 22;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.setTextColor(110);
+  doc.text('Conrad Müller-Klingspor · Klingspor Energy', 50, y); y += 14;
+  doc.text('Generated ' + today, 50, y); y += 22;
+  doc.setTextColor(0);
+
+  if (exportContent === 'full' || exportContent === 'summary') {
+    // Summary stats
+    const counts = {
+      total: state.booths.length,
+      visited: state.booths.filter(b => ['visited','warm','hot','done'].includes(b.status)).length,
+      hot: state.booths.filter(b => b.status === 'hot').length,
+      warm: state.booths.filter(b => b.status === 'warm').length,
+      todos: state.booths.flatMap(b=>b.todos).filter(t=>!t.done).length
+    };
+    doc.autoTable({
+      startY: y,
+      theme: 'plain',
+      styles: { fontSize: 10, cellPadding: 4 },
+      body: [
+        ['Total booths', counts.total],
+        ['Visited', counts.visited],
+        ['Hot leads', counts.hot],
+        ['Warm leads', counts.warm],
+        ['Open todos', counts.todos]
+      ],
+      columnStyles: { 0: { fontStyle: 'bold', cellWidth: 120 } }
+    });
+    y = doc.lastAutoTable.finalY + 18;
+
+    // Booth table
+    const sorted = [...state.booths].sort((a,b) => {
+      const order = { hot:0, warm:1, visited:2, todo:3, done:4 };
+      const sa = order[a.status] ?? 9, sb = order[b.status] ?? 9;
+      if (sa !== sb) return sa - sb;
+      return (b.imp||0) - (a.imp||0);
+    });
+    const headers = exportContent === 'full'
+      ? [['Booth','#','Cat.','Imp.','Status','Tags','Contacts','Open Todos']]
+      : [['Booth','#','Cat.','Imp.','Status','Tags']];
+    const body = sorted.map(b => {
+      const base = [b.name, b.num||'', categoryLabel(b.cat), b.imp||'', b.status, b.tags.join(', ')];
+      if (exportContent === 'full') {
+        base.push(
+          b.contacts.map(c => [c.name, c.role, c.email].filter(Boolean).join(' / ')).join('\n') || '–',
+          b.todos.filter(t=>!t.done && t.text).map(t => `□ ${t.text}${t.due?' ('+t.due+')':''}`).join('\n') || '–'
+        );
+      }
+      return base;
+    });
+    doc.autoTable({
+      startY: y,
+      head: headers,
+      body,
+      headStyles: { fillColor: [247,147,26], textColor: [0,0,0], fontStyle: 'bold' },
+      styles: { fontSize: 8, cellPadding: 4, overflow: 'linebreak' },
+      columnStyles: exportContent === 'full' ? {
+        0: { cellWidth: 75, fontStyle: 'bold' },
+        1: { cellWidth: 28 },
+        2: { cellWidth: 38 },
+        3: { cellWidth: 28 },
+        4: { cellWidth: 38 },
+        5: { cellWidth: 75 },
+        6: { cellWidth: 100 },
+        7: { cellWidth: 110 }
+      } : {
+        0: { cellWidth: 130, fontStyle: 'bold' },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 60 },
+        3: { cellWidth: 50 },
+        4: { cellWidth: 70 },
+        5: { cellWidth: 140 }
+      }
+    });
+    y = doc.lastAutoTable.finalY + 18;
+
+    if (exportContent === 'full') {
+      // Per-booth notes (only ones with notes)
+      const withNotes = sorted.filter(b => b.notes);
+      if (withNotes.length) {
+        if (y > 700) { doc.addPage(); y = 50; }
+        doc.setFont('helvetica','bold'); doc.setFontSize(12);
+        doc.text('Notes by booth', 50, y); y += 16;
+        doc.setFont('helvetica','normal'); doc.setFontSize(9);
+        withNotes.forEach(b => {
+          if (y > 720) { doc.addPage(); y = 50; }
+          doc.setFont('helvetica','bold');
+          doc.text(`${b.name} [#${b.num||'?'}] · ${b.status}`, 50, y); y += 12;
+          doc.setFont('helvetica','normal');
+          const lines = doc.splitTextToSize(b.notes, 500);
+          lines.forEach(l => {
+            if (y > 740) { doc.addPage(); y = 50; }
+            doc.text(l, 50, y); y += 11;
+          });
+          y += 8;
+        });
+      }
+    }
+  }
+
+  if (exportContent === 'todos') {
+    const today_iso = dateStr();
+    const items = [];
+    state.booths.forEach(b => b.todos.forEach(t => {
+      if (!t.done && t.text) items.push({ ...t, booth: b.name });
+    }));
+    items.sort((a,b) => (a.due||'9').localeCompare(b.due||'9'));
+    doc.autoTable({
+      startY: y,
+      head: [['Task','Booth','Due','When']],
+      body: items.map(t => {
+        let delta = '';
+        if (t.due) {
+          const d = Math.round((new Date(t.due) - new Date(today_iso)) / 86400000);
+          delta = d === 0 ? 'today' : (d < 0 ? `${Math.abs(d)}d overdue` : `in ${d}d`);
+        }
+        return [t.text, t.booth, t.due||'', delta];
+      }),
+      headStyles: { fillColor: [247,147,26], textColor: [0,0,0], fontStyle: 'bold' },
+      styles: { fontSize: 9, cellPadding: 5 },
+      columnStyles: { 0: { cellWidth: 280 }, 1: { cellWidth: 130 }, 2: { cellWidth: 60 }, 3: { cellWidth: 60 } }
+    });
+  }
+
+  if (exportContent === 'emails') {
+    const candidates = state.booths.filter(b => ['hot','warm','visited'].includes(b.status) && (b.tags.length || b.notes));
+    if (!candidates.length) {
+      doc.setFontSize(11);
+      doc.text('No email drafts yet. Tag your meetings to generate drafts.', 50, y);
+    } else {
+      candidates.forEach((b, i) => {
+        if (i > 0) doc.addPage();
+        y = 50;
+        doc.setFont('helvetica','bold'); doc.setFontSize(13);
+        doc.text(b.name, 50, y); y += 18;
+        const c = b.contacts[0] || {};
+        doc.setFont('helvetica','normal'); doc.setFontSize(9);
+        doc.setTextColor(110);
+        if (c.name || c.email) doc.text(`To: ${[c.name, c.email].filter(Boolean).join(' <')}${c.email?'>':''}`, 50, y), y += 12;
+        doc.text('Subject: Following up — Bitcoin Conference', 50, y); y += 16;
+        doc.setTextColor(0);
+        doc.setFontSize(10);
+        const lines = doc.splitTextToSize(generateEmailDraft(b), 500);
+        lines.forEach(l => {
+          if (y > 740) { doc.addPage(); y = 50; }
+          doc.text(l, 50, y); y += 13;
+        });
+      });
+    }
+  }
+
+  // Footer page numbers
+  const pageCount = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pageCount; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8); doc.setTextColor(150);
+    doc.text(`${i} / ${pageCount}`, 560, 770);
+  }
+
+  doc.save(fileBase() + '.pdf');
+  flashExportBtn();
+}
+
+/* -------- TEXT / JSON EXPORT (legacy) -------- */
+function runTextExport() {
+  let txt = '';
+  if (exportContent === 'json') {
+    const lite = JSON.parse(JSON.stringify(state));
+    lite.booths.forEach(b => {
+      if (b.photos) b.photos = b.photos.map(p => ({ ...p, data: p.data ? '[base64 ' + p.data.length + ' chars]' : null }));
+    });
+    txt = JSON.stringify(lite, null, 2);
+  } else {
+    txt = buildTextContent();
+  }
+
+  // Try clipboard first; if that fails, fall back to file download
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = $('#exportBtn');
+    btn.textContent = 'Copied to clipboard ✓';
+    setTimeout(() => updateExportPreview(), 2000);
+  }).catch(() => {
+    const blob = new Blob([txt], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileBase() + '.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+    flashExportBtn();
+  });
+}
+
+function buildTextContent() {
+  const today = new Date().toLocaleDateString('en-US', {year:'numeric',month:'long',day:'numeric'});
+  let txt = '';
+  if (exportContent === 'full' || exportContent === 'summary') {
+    txt += `BTC2026 CONFERENCE — MEETING LOG\nConrad Müller-Klingspor · Klingspor Energy\nGenerated: ${today}\n` + '═'.repeat(48) + '\n\n';
+    const counts = {
+      total: state.booths.length,
+      visited: state.booths.filter(b => ['visited','warm','hot','done'].includes(b.status)).length,
+      hot: state.booths.filter(b => b.status === 'hot').length,
+      warm: state.booths.filter(b => b.status === 'warm').length,
+      todos: state.booths.flatMap(b=>b.todos).filter(t=>!t.done).length
+    };
+    txt += `SUMMARY\n  Booths visited: ${counts.visited}/${counts.total}\n  Hot: ${counts.hot}    Warm: ${counts.warm}\n  Open todos: ${counts.todos}\n\n`;
+    ['hot','warm','visited','todo'].forEach(st => {
+      const group = state.booths.filter(b => b.status === st);
+      if (!group.length) return;
+      txt += '─'.repeat(48) + '\n' + `${st.toUpperCase()} (${group.length})\n` + '─'.repeat(48) + '\n\n';
+      group.sort((a,b) => (b.imp||0)-(a.imp||0)).forEach(b => {
+        txt += `▸ ${b.name}  [#${b.num}]  ${categoryLabel(b.cat)}  · imp ${b.imp}\n`;
+        if (exportContent === 'full') {
+          if (b.contacts.length) {
+            txt += `  Contacts:\n`;
+            b.contacts.forEach(c => {
+              const parts = [c.name, c.role, c.email].filter(Boolean).join(' · ');
+              if (parts) txt += `    – ${parts}\n`;
+            });
+          }
+          if ((b.photos||[]).length) txt += `  Photos: ${b.photos.length} attached\n`;
+          if (b.tags.length) txt += `  Tags: ${b.tags.join(', ')}\n`;
+          if (b.notes) txt += `  Notes: ${b.notes}\n`;
+          const ot = b.todos.filter(t => !t.done && t.text);
+          if (ot.length) {
+            txt += `  Todos:\n`;
+            ot.forEach(t => txt += `    □ ${t.text}${t.due?' (due '+t.due+')':''}\n`);
+          }
+        } else {
+          if (b.tags.length) txt += `  ${b.tags.slice(0,3).join(' · ')}\n`;
+        }
+        txt += '\n';
+      });
+    });
+  }
+  if (exportContent === 'todos') {
+    txt += `TODO LIST — BTC2026 CONFERENCE\n${today}\n\n`;
+    const items = [];
+    state.booths.forEach(b => b.todos.forEach(t => {
+      if (!t.done && t.text) items.push({ ...t, booth: b.name });
+    }));
+    items.sort((a,b) => (a.due||'9').localeCompare(b.due||'9'));
+    if (!items.length) txt += '(none)\n';
+    items.forEach(t => txt += `□ ${t.text}\n  → ${t.booth}${t.due?'   |   due '+t.due:''}\n\n`);
+  }
+  if (exportContent === 'emails') {
+    txt += `FOLLOW-UP EMAIL DRAFTS\n${today}\n\n`;
+    const candidates = state.booths.filter(b => ['hot','warm','visited'].includes(b.status) && (b.tags.length || b.notes));
+    if (!candidates.length) txt += '(no drafts yet — tag your meetings to generate)\n';
+    candidates.forEach(b => {
+      txt += '═'.repeat(48) + '\n';
+      txt += `TO: ${b.name}${b.contacts[0]?.email ? ' <'+b.contacts[0].email+'>' : ''}\n`;
+      txt += `SUBJECT: Following up — Bitcoin Conference\n`;
+      txt += '═'.repeat(48) + '\n\n';
+      txt += generateEmailDraft(b) + '\n\n\n';
+    });
+  }
+  return txt;
+}
+
+function flashExportBtn() {
+  const btn = $('#exportBtn');
+  const original = btn.textContent;
+  btn.textContent = 'Downloaded ✓';
+  setTimeout(() => updateExportPreview(), 2000);
+}
+
+/* ============================================================
+   LEGEND
+   ============================================================ */
+function openLegend() {
+  $('#editorNameInput').value = state.editorName || '';
+  updateStorageInfo();
+  $('#legendModal').classList.add('open');
+}
+function closeLegend() {
+  state.editorName = $('#editorNameInput').value.trim();
+  saveState();
+  $('#legendModal').classList.remove('open');
+}
+$('#editorNameInput').addEventListener('input', e => {
+  state.editorName = e.target.value.trim();
+  saveState();
+});
+
+function updateStorageInfo() {
+  const storageEl = document.getElementById('storageInfo');
+  const lastSaveEl = document.getElementById('lastSaveInfo');
+  if (!storageEl) return;
+
+  // Check if localStorage is actually persistent
+  try {
+    const testKey = '__test_persist__';
+    localStorage.setItem(testKey, '1');
+    const stored = localStorage.getItem(testKey);
+    localStorage.removeItem(testKey);
+    if (stored === '1') {
+      const size = (localStorage.getItem(STORAGE_KEY) || '').length;
+      const kb = (size / 1024).toFixed(1);
+      const isPWA = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+      storageEl.innerHTML = isPWA
+        ? `<span style="color:var(--done)">● Installed app — ${kb} KB saved</span>`
+        : `<span style="color:var(--accent)">⚠ Browser tab — ${kb} KB saved (install to home screen for persistence)</span>`;
+    } else {
+      storageEl.innerHTML = '<span style="color:var(--hot)">⚠ Storage not working</span>';
+    }
+  } catch (e) {
+    storageEl.innerHTML = '<span style="color:var(--hot)">⚠ Storage error: ' + e.message + '</span>';
+  }
+
+  if (lastSavedAt) {
+    const ago = Math.round((Date.now() - lastSavedAt) / 1000);
+    lastSaveEl.textContent = ago < 60 ? `${ago}s ago` : `${Math.round(ago/60)}m ago`;
+  } else {
+    lastSaveEl.textContent = 'just now';
+  }
+}
+
+function downloadBackup() {
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `BTC2026-CRM-backup-${new Date().toISOString().slice(0,10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function restoreBackup() {
+  const input = document.getElementById('restoreFileInput');
+  input.value = '';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!confirm('Replace all current data with this backup? Your current data will be lost (unless you backed it up first).')) return;
+    try {
+      const text = await file.text();
+      const restored = JSON.parse(text);
+      if (!restored.booths || !Array.isArray(restored.booths)) {
+        alert('That does not look like a valid backup file.');
+        return;
+      }
+      state = restored;
+      saveState();
+      closeLegend();
+      renderAll();
+      alert('Backup restored — ' + state.booths.length + ' booths loaded.');
+    } catch (err) {
+      alert('Could not read backup: ' + err.message);
+    }
+  };
+  input.click();
+}
+
+function resetAllData() {
+  if (!confirm('Wipe all data and start fresh? This cannot be undone. Tip: Download a backup first.')) return;
+  if (!confirm('Are you sure? All your booths, contacts, notes, and photos will be deleted.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  // Clear photo blobs too
+  Object.keys(localStorage).forEach(k => {
+    if (k.startsWith(PHOTO_KEY_PREFIX)) localStorage.removeItem(k);
+  });
+  location.reload();
+}
+
+/* ============================================================
+   ROUTER
+   ============================================================ */
+function renderAll() {
+  $$('.tab-content').forEach(c => c.style.display = 'none');
+  $('#tab-' + state.activeTab).style.display = 'block';
+  $$('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === state.activeTab));
+  $$('#boothFilters .filter-chip').forEach(c => c.classList.toggle('active', c.dataset.filter === state.activeFilter));
+  $$('[data-todofilter]').forEach(c => c.classList.toggle('active', c.dataset.todofilter === state.activeTodoFilter));
+  $('#sortSelect').value = state.activeSort;
+  renderStats();
+  if (state.activeTab === 'booths') renderBooths();
+  if (state.activeTab === 'todos') renderTodos();
+  if (state.activeTab === 'follow') renderFollow();
+}
+
+renderAll();
+saveState();
+
+if (window.storage && navigator.onLine) {
+  setTimeout(() => manualSync(), 1500);
+}
+
+$$('.modal-backdrop').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+</script>
+
+
+</body></html>
